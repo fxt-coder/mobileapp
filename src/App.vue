@@ -1,21 +1,56 @@
 <template>
   <div class="app">
-    app
-    <i class="iconfont iconyanzhengma"></i>
-    <van-button type="default">默认按钮</van-button>
-    <van-button type="primary">主要按钮</van-button>
-    <van-button type="info">信息按钮</van-button>
-    <van-button type="warning">警告按钮</van-button>
-    <van-button type="danger">危险按钮</van-button>
+    <router-view></router-view>
+    <van-tabbar
+      active-color="#E40137"
+      inactive-color="#B4B4BD"
+      v-model="active"
+      route
+      placeholder
+    >
+      <van-tabbar-item to="/Company" icon="home-o"
+        ><span>公司</span>
+        <template #icon>
+          <i class="iconfont iconicon_footbar_gs_nor"></i> </template
+      ></van-tabbar-item>
+      <van-tabbar-item to="/Question" icon="search"
+        ><span>刷题</span>
+        <template #icon>
+          <i class="iconfont iconicon_footbar_st_sel"></i> </template
+      ></van-tabbar-item>
+      <van-tabbar-item to="/Find" icon="friends-o"
+        ><span>发现</span>
+        <template #icon>
+          <i class="iconfont iconicon_footbar_fx_nor"></i> </template
+      ></van-tabbar-item>
+      <van-tabbar-item to="/My" icon="setting-o"
+        ><span>我的</span>
+        <template #icon>
+          <i class="iconfont iconicon_footbar_wode_sel"></i> </template
+      ></van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      active: 0
+    }
+  }
+}
 </script>
 
 <style lang="less">
 .app {
-  height: 100px;
-  width: 100px;
+  .iconfont {
+    font-size: 28px;
+  }
+  .van-tabbar-item--active {
+    color: @main-color;
+  }
+  .van-tabbar-item {
+    font-size: 10px;
+  }
 }
 </style>
