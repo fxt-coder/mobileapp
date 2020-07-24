@@ -6,6 +6,12 @@ import 'normalize.css'
 // 整合vant
 import Vant from 'vant'
 import 'vant/lib/index.css'
+// 导入flexible 动态设置rem大小
+import 'amfe-flexible'
+// 字体图标引入
+import '@/styles/iconfont.css'
+// 基础css引入
+import '@/styles/base.less'
 // 注册vant
 Vue.use(Vant)
 Vue.config.productionTip = false
