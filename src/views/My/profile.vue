@@ -1,9 +1,15 @@
 <template>
   <div>
-    我的资料
+    <NavBar title="我的资料"></NavBar>
+    <cell title="头像"></cell>
   </div>
 </template>
 <script>
-export default {}
+import cell from './cell'
+export default {
+  components: {
+    cell
+  }
+}
 </script>
 <style></style>

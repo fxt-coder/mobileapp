@@ -26,6 +26,7 @@ export default {
   methods: {
     onClickLeft () {
       this.$emit('onClickLeft')
+      this.$router.go(-1)
     },
     onClickRight () {
       this.$emit('onClickRight')
