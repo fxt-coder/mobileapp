@@ -1,29 +1,47 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Company from '@/views/Company/index.vue'
-import Find from '@/views/Find/index.vue'
-import My from '@/views/My/index.vue'
-import Question from '@/views/Question/index.vue'
+import company from '@/views/company/index.vue'
+import find from '@/views/find/index.vue'
+import my from '@/views/my/index.vue'
+import question from '@/views/question/index.vue'
+import login from '@/views/login/index.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
+    // { path: '/', redirect: '/login' },
+    { path: '/', redirect: '/login' },
     {
-      path: '/Company',
-      component: Company
-
+      path: '/company',
+      component: company,
+      meta: {
+        showTabbar: true
+      }
     },
     {
-      path: '/Find',
-      component: Find
+      path: '/find',
+      component: find,
+      meta: {
+        showTabbar: true
+      }
     },
     {
-      path: '/My',
-      component: My
+      path: '/my',
+      component: my,
+      meta: {
+        showTabbar: true
+      }
     },
     {
-      path: '/Question',
-      component: Question
+      path: '/question',
+      component: question,
+      meta: {
+        showTabbar: true
+      }
+    },
+    {
+      path: '/login',
+      component: login
     }
   ]
 })

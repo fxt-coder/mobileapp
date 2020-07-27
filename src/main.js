@@ -12,8 +12,10 @@ import 'amfe-flexible'
 import '@/styles/iconfont.css'
 // 基础css引入
 import '@/styles/base.less'
+import NavBar from '@/components/NavBar.vue'
 // 注册vant
 Vue.use(Vant)
+Vue.component(NavBar.name, NavBar)
 Vue.config.productionTip = false
 // asdasd
 new Vue({

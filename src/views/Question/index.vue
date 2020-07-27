@@ -4,6 +4,8 @@
   </div>
 </template>
 <script>
-export default {}
+export default {
+  name: 'quetion'
+}
 </script>
 <style></style>
