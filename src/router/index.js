@@ -5,6 +5,7 @@ import find from '@/views/find/index.vue'
 import my from '@/views/my/index.vue'
 import question from '@/views/question/index.vue'
 import login from '@/views/login/index.vue'
+import profile from '@/views/my/profile.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -42,6 +43,10 @@ const router = new VueRouter({
     {
       path: '/login',
       component: login
+    },
+    {
+      path: '/profile',
+      component: profile
     }
   ]
 })

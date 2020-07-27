@@ -3,29 +3,38 @@
     <div class="info">
       <div class="top">
         <div class="left">
-          <p class="title">续命咖啡</p>
-          <p class="tips">面试不求人，我有面试宝典</p>
+          <p class="title">{{ userInfo.nickname }}</p>
+          <p class="tips">{{ userInfo.intro }}</p>
         </div>
         <div class="right">
-          <img class="avatar" src="@/assets/157844.jpg" alt="" />
+          <img
+            @click="toProfile"
+            style="width:50px"
+            class="avatar"
+            :src="'http://localhost:1337' + userInfo.avatar"
+            alt=""
+          />
         </div>
       </div>
       <div class="bottom">
         <ul>
           <li>
-            <p class="num">55</p>
+            <p class="num">{{ userInfo.submitNum }}</p>
             <p class="tips">累计答题</p>
           </li>
           <li>
-            <p class="num">55</p>
+            <p class="num">{{ userInfo.collectQuestions.length }}</p>
             <p class="tips">收藏题目</p>
           </li>
           <li>
-            <p class="num">55</p>
+            <p class="num">{{ userInfo.errorNum }}</p>
             <p class="tips">我的错题</p>
           </li>
           <li>
-            <p class="num"><span>55</span><span class="tips1">%</span></p>
+            <p class="num">
+              <span>{{ correctPersent }}</span
+              ><span class="tips1">%</span>
+            </p>
             <p class="tips">正确率</p>
           </li>
         </ul>
@@ -36,26 +45,38 @@
         <cell
           @click="clickCell"
           class="topcell"
-          value="产品经理"
+          :value="userInfo.position"
           title="我的岗位"
           icon="iconicon_mine_gangwei"
         ></cell>
         <div class="title">面经数据</div>
         <ul>
           <li>
-            <p>昨日阅读<span class="data_num1">+300</span></p>
-            <p class="data_num2">777</p>
+            <p>
+              昨日阅读<span class="data_num1"
+                >+{{ userInfo.shareData.read.yesterday }}</span
+              >
+            </p>
+            <p class="data_num2">{{ userInfo.shareData.read.total }}</p>
             <p>阅读总数</p>
           </li>
           <li>
-            <p>昨日阅读<span class="data_num1">+300</span></p>
-            <p class="data_num2">777</p>
-            <p>阅读总数</p>
+            <p>
+              昨日获赞<span class="data_num1"
+                >+{{ userInfo.shareData.star.yesterday }}</span
+              >
+            </p>
+            <p class="data_num2">{{ userInfo.shareData.star.total }}</p>
+            <p>获赞总数</p>
           </li>
           <li>
-            <p>昨日阅读<span class="data_num1">+300</span></p>
-            <p class="data_num2">777</p>
-            <p>阅读总数</p>
+            <p>
+              昨日新增<span class="data_num1"
+                >+{{ userInfo.shareData.comment.yesterday }}</span
+              >
+            </p>
+            <p class="data_num2">{{ userInfo.shareData.comment.total }}</p>
+            <p>评论总数</p>
           </li>
         </ul>
       </div>
@@ -65,9 +86,13 @@
           title="我的面经分享"
           icon="iconicon_mine_mianjing"
         ></cell>
-        <cell value="22" title="我的消息" icon="iconicon_mine_xiaoxi"></cell>
         <cell
-          value="22"
+          :value="userInfo.systemMessages"
+          title="我的消息"
+          icon="iconicon_mine_xiaoxi"
+        ></cell>
+        <cell
+          :value="userInfo.collectQuestions.length"
           title="收藏的题库"
           icon="iconicon_mine_tikushoucang"
         ></cell>
@@ -76,7 +101,11 @@
           title="收藏的企业"
           icon="iconicon_mine_qiyeshoucang"
         ></cell>
-        <cell value="22" title="我的错题" icon="iconicon_mine_cuoti"></cell>
+        <cell
+          :value="userInfo.errorNum"
+          title="我的错题"
+          icon="iconicon_mine_cuoti"
+        ></cell>
         <cell
           value="22"
           title="收藏的面试经验"
@@ -88,17 +117,31 @@
 </template>
 <script>
 import cell from './cell'
+import { mapState } from 'vuex'
 export default {
   name: 'my',
   components: {
     cell
   },
-  data () {
-    return {}
+  computed: {
+    ...mapState(['userInfo']),
+    // userInfo () {
+    //   return this.$store.state.userInfo
+    // },
+    correctPersent () {
+      return (
+        ((this.userInfo.submitNum - this.userInfo.errorNum) /
+          this.userInfo.submitNum) *
+        100
+      ).toFixed(1)
+    }
   },
   methods: {
     clickCell () {
       window.console.log('我是产品')
+    },
+    toProfile () {
+      this.$router.push('/profile')
     }
   }
 }

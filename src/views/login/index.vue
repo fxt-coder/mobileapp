@@ -66,6 +66,7 @@
 <script>
 import { saveToken } from '@/utils/token.js'
 import { getCode, login } from '@/api/login.js'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -77,6 +78,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['SETUSERINFO']),
     onClickLeft () {
       console.log('onClickLeft')
     },
@@ -85,8 +87,11 @@ export default {
       console.log(value)
       this.$toast.loading({ duration: 0 })
       login(value).then(res => {
-        window.console.log(res)
+        // window.console.log(res)
+        // this.$store.state.userInfo = res.data.user
         this.$toast.success('欢迎')
+        // this.$store.commit('SETUSERINFO', res.data.user)
+        this.SETUSERINFO(res.data.user)
         saveToken(res.data.jwt)
         this.$router.push('/my')
       })

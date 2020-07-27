@@ -10,7 +10,12 @@
 </template>
 <script>
 export default {
-  props: ['title', 'value', 'icon'],
+  // props: ['title', 'value', 'icon'],
+  props: {
+    title: String,
+    value: [Number, String],
+    icon: String
+  },
   methods: {
     cellClick () {
       this.$emit('click')
