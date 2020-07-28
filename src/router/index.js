@@ -6,6 +6,7 @@ import my from '@/views/my/index.vue'
 import question from '@/views/question/index.vue'
 import login from '@/views/login/index.vue'
 import profile from '@/views/my/profile.vue'
+import resetNickname from '@/views/my/resetNickname.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -46,7 +47,17 @@ const router = new VueRouter({
     },
     {
       path: '/profile',
-      component: profile
+      component: profile,
+      meta: {
+        needLogin: true
+      }
+    },
+    {
+      path: '/resetNickname',
+      component: resetNickname,
+      meta: {
+        needLogin: true
+      }
     }
   ]
 })

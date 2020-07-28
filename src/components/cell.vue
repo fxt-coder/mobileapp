@@ -1,5 +1,9 @@
 <template>
   <van-cell class="cell" @click="cellClick" :title="title" :value="value">
+    <!-- 后备插槽 -->
+    <template>
+      <slot>{{ value }}</slot>
+    </template>
     <template #icon>
       <i class="iconfont" :class="icon"></i>
     </template>
@@ -10,10 +14,11 @@
 </template>
 <script>
 export default {
+  name: 'cell',
   // props: ['title', 'value', 'icon'],
   props: {
     title: String,
-    value: [Number, String],
+    value: [Number, String, Object],
     icon: String
   },
   methods: {

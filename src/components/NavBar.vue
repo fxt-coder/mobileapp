@@ -22,7 +22,12 @@
 <script>
 export default {
   name: 'NavBar',
-  props: ['title', 'left_text', 'right_text'],
+  // props: ['title', 'left_text', 'right_text'],
+  props: {
+    title: String,
+    left_text: String,
+    right_text: String
+  },
   methods: {
     onClickLeft () {
       this.$emit('onClickLeft')

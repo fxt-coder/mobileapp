@@ -11,7 +11,7 @@
             @click="toProfile"
             style="width:50px"
             class="avatar"
-            :src="'http://localhost:1337' + userInfo.avatar"
+            :src="userInfo.avatar"
             alt=""
           />
         </div>
@@ -116,7 +116,7 @@
   </div>
 </template>
 <script>
-import cell from './cell'
+import cell from '@/components/cell'
 import { mapState } from 'vuex'
 export default {
   name: 'my',

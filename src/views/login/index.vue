@@ -85,12 +85,16 @@ export default {
     // 表单校验成功之后的回调函数
     onSubmit (value) {
       console.log(value)
-      this.$toast.loading({ duration: 0 })
+      this.$toast.loading({ duration: 500 })
       login(value).then(res => {
         // window.console.log(res)
         // this.$store.state.userInfo = res.data.user
         this.$toast.success('欢迎')
+        // this.$notify({
+        //   message: '欢迎'
+        // })
         // this.$store.commit('SETUSERINFO', res.data.user)
+        res.data.user.avatar = process.env.VUE_APP_URL + res.data.user.avatar
         this.SETUSERINFO(res.data.user)
         saveToken(res.data.jwt)
         this.$router.push('/my')

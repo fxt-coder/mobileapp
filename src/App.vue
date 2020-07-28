@@ -2,7 +2,7 @@
   <div class="app">
     <router-view></router-view>
     <van-tabbar
-      v-show="$route.meta.showTabbar"
+      v-if="$route.meta.showTabbar"
       active-color="#E40137"
       inactive-color="#B4B4BD"
       v-model="active"
@@ -38,12 +38,16 @@ export default {
     return {
       active: 0
     }
+  },
+  created () {
+    window.console.log(this)
   }
 }
 </script>
 
 <style lang="less">
 .app {
+  background-color: #f9f9f9;
   .iconfont {
     font-size: 28px;
   }
