@@ -6,7 +6,7 @@ import my from '@/views/my/index.vue'
 import question from '@/views/question/index.vue'
 import login from '@/views/login/index.vue'
 import profile from '@/views/my/profile.vue'
-import resetNickname from '@/views/my/resetNickname.vue'
+import editInfo from '@/views/my/editInfo/index.vue'
 import { Toast } from 'vant'
 import store from '@/store/index.js'
 import { getToken, removeToken } from '@/utils/token.js'
@@ -58,8 +58,8 @@ const router = new VueRouter({
       }
     },
     {
-      path: '/resetNickname',
-      component: resetNickname,
+      path: '/editInfo',
+      component: editInfo,
       meta: {
         needLogin: true
       }
@@ -67,6 +67,7 @@ const router = new VueRouter({
   ]
 })
 // 导航守卫
+// 路由跳转之前do something
 router.beforeEach((to, from, next) => {
   window.console.log('to', to)
   window.console.log('from', from)

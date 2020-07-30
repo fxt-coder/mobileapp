@@ -14,15 +14,19 @@ import 'amfe-flexible'
 import '@/styles/iconfont.css'
 // 基础css引入
 import '@/styles/base.less'
-import NavBar from '@/components/NavBar.vue'
-import cell from '@/components/cell.vue'
+// import NavBar from '@/components/NavBar.vue'
+// import cell from '@/components/cell.vue'
+// 导入组件库components
+import Components from './components'
 // eslint-disable-next-line import/no-duplicates
 import { Toast } from 'vant'
 Toast.setDefaultOptions({ duration: 1000 })
 // 注册vant
 Vue.use(Vant)
-Vue.component(NavBar.name, NavBar)
-Vue.component(cell.name, cell)
+// 注册Components组件库
+Vue.use(Components)
+// Vue.component(NavBar.name, NavBar)
+// Vue.component(cell.name, cell)
 Vue.config.productionTip = false
 // asdasd
 new Vue({

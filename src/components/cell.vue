@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     cellClick () {
+      // 触发父组件方法
       this.$emit('click')
     }
   }

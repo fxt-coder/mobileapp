@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import area from '@/utils/area.js'
 Vue.use(Vuex)
 export default new Vuex.Store({
+  strict: true,
   state: {
     // 判断用户登录
     isLogin: false, // 默认为false 当需要进行登录验证的时候利用Mutations中的方法来改变需要登录页面的isLogin
@@ -15,6 +16,10 @@ export default new Vuex.Store({
     },
     SETLOGIN (state, newisLogin) {
       state.isLogin = newisLogin
+    },
+    // 修改指定值而不是整个userInfo刷新
+    SETPROPVALUE (state, { propName, propValue }) {
+      state.userInfo[propName] = propValue
     }
   },
   getters: {
@@ -23,8 +28,9 @@ export default new Vuex.Store({
       // 如果用户信息存在
       if (state.userInfo) {
         return area.city_list[state.userInfo.area]
+      } else {
+        return ''
       }
-      return ''
     },
     // 对Number性别转化
     gender (state) {

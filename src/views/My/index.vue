@@ -43,7 +43,7 @@
     <div class="tag">
       <div class="data_box">
         <cell
-          @click="clickCell"
+          @click="clickCell('position')"
           class="topcell"
           :value="userInfo.position"
           title="我的岗位"
@@ -137,8 +137,9 @@ export default {
     }
   },
   methods: {
-    clickCell () {
-      window.console.log('我是产品')
+    clickCell (prop) {
+      this.$router.push(`/editInfo?prop=${prop}`)
+      // window.console.log('我是产品')
     },
     toProfile () {
       this.$router.push('/profile')
@@ -146,7 +147,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .my {
   // background-color: orange;
   .info {
