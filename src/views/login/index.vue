@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['SETUSERINFO']),
+    ...mapMutations(['SETUSERINFO', 'SETLOGIN']),
     onClickLeft () {
       console.log('onClickLeft')
     },
@@ -86,19 +86,29 @@ export default {
     onSubmit (value) {
       console.log(value)
       this.$toast.loading({ duration: 500 })
-      login(value).then(res => {
-        // window.console.log(res)
-        // this.$store.state.userInfo = res.data.user
-        this.$toast.success('欢迎')
-        // this.$notify({
-        //   message: '欢迎'
-        // })
-        // this.$store.commit('SETUSERINFO', res.data.user)
-        res.data.user.avatar = process.env.VUE_APP_URL + res.data.user.avatar
-        this.SETUSERINFO(res.data.user)
-        saveToken(res.data.jwt)
-        this.$router.push('/my')
-      })
+      login(value)
+        .then(res => {
+          // window.console.log(res)
+          // this.$store.state.userInfo = res.data.user
+          this.$toast.success('欢迎')
+          // this.$notify({
+          //   message: '欢迎'
+          // })
+          // this.$store.commit('SETUSERINFO', res.data.user)
+          res.data.user.avatar = process.env.VUE_APP_URL + res.data.user.avatar
+          this.SETUSERINFO(res.data.user)
+          // 登录成功后通过vuex mutations调用设置的方法来设置路由元信息
+          this.SETLOGIN(true)
+          // 判断并且跳转逻辑
+          if (this.$route.query.redirect) {
+            this.$router.push(`${this.$route.query.redirect}`)
+          } else {
+            this.$router.push('/find')
+          }
+          saveToken(res.data.jwt)
+          // this.$router.push('/my')
+        })
+        .catch(() => {})
     },
     clickCode () {
       if (this.time !== 0) {

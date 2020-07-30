@@ -116,13 +116,13 @@
   </div>
 </template>
 <script>
-import cell from '@/components/cell'
+// import cell from '@/components/cell'
 import { mapState } from 'vuex'
 export default {
   name: 'my',
-  components: {
-    cell
-  },
+  // components: {
+  //   cell
+  // },
   computed: {
     ...mapState(['userInfo']),
     // userInfo () {

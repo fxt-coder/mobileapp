@@ -31,7 +31,12 @@ export default {
   methods: {
     onClickLeft () {
       this.$emit('onClickLeft')
-      this.$router.go(-1)
+      // 返回逻辑
+      if (this.$route.query.redirect) {
+        this.$router.push('/find')
+      } else {
+        this.$router.go(-1)
+      }
     },
     onClickRight () {
       this.$emit('onClickRight')

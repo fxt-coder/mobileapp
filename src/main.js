@@ -15,12 +15,14 @@ import '@/styles/iconfont.css'
 // 基础css引入
 import '@/styles/base.less'
 import NavBar from '@/components/NavBar.vue'
+import cell from '@/components/cell.vue'
 // eslint-disable-next-line import/no-duplicates
 import { Toast } from 'vant'
-Toast.setDefaultOptions({ duration: 500 })
+Toast.setDefaultOptions({ duration: 1000 })
 // 注册vant
 Vue.use(Vant)
 Vue.component(NavBar.name, NavBar)
+Vue.component(cell.name, cell)
 Vue.config.productionTip = false
 // asdasd
 new Vue({
