@@ -55,7 +55,9 @@ export default {
     // 左返回键
     back () {},
     // 右保存键
-    saveEdit () {}
+    saveEdit () {
+      window.console.log('保存')
+    }
   }
 }
 </script>
