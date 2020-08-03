@@ -10,7 +10,7 @@
         {{ item.author.nickname }}
       </div>
       <div class="time">
-        {{ item.created_at }}
+        {{ item.created_at | formateTime }}
       </div>
       <div class="comment">
         <i class="iconfont iconicon_pinglunliang"></i>
