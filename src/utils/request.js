@@ -8,7 +8,7 @@ const request = axios.create({
 // 请求拦截
 request.interceptors.request.use(
   function (config) {
-    window.console.log('config', config)
+    // window.console.log('config', config)
     // 判断profile请求中携带的needToken是否为true
     if (config.needToken) {
       // 判断能否获取到token值

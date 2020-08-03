@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// import moment from 'moment'
 import 'normalize.css'
 // 整合vant
 // eslint-disable-next-line import/no-duplicates
@@ -17,7 +18,7 @@ import '@/styles/base.less'
 // import NavBar from '@/components/NavBar.vue'
 // import cell from '@/components/cell.vue'
 // 导入组件库components
-import Components from './components'
+import Components from './components/index.js'
 // eslint-disable-next-line import/no-duplicates
 import { Toast } from 'vant'
 Toast.setDefaultOptions({ duration: 1000 })
@@ -28,6 +29,7 @@ Vue.use(Components)
 // Vue.component(NavBar.name, NavBar)
 // Vue.component(cell.name, cell)
 Vue.config.productionTip = false
+
 // asdasd
 new Vue({
   router,

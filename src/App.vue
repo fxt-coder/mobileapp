@@ -1,6 +1,9 @@
 <template>
   <div class="app">
-    <router-view></router-view>
+    <!-- 下拉刷新  include绑定需要刷新的页面-->
+    <keep-alive include="find">
+      <router-view></router-view>
+    </keep-alive>
     <van-tabbar
       v-if="$route.meta.showTabbar"
       active-color="#E40137"

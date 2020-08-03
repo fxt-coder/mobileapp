@@ -7,6 +7,13 @@ import question from '@/views/question/index.vue'
 import login from '@/views/login/index.vue'
 import profile from '@/views/my/profile.vue'
 import editInfo from '@/views/my/editInfo/index.vue'
+import marketData from '@/views/find/marketData/index.vue'
+import share from '@/views/find/share/index.vue'
+import shareList from '@/views/find/share/shareList.vue'
+import technicList from '@/views/find/technic/technicList.vue'
+import marketDataList from '@/views/find/marketData/marketDataList.vue'
+import technic from '@/views/find/technic/index.vue'
+import search from '@/views/find/search/index.vue'
 import { Toast } from 'vant'
 import store from '@/store/index.js'
 import { getToken, removeToken } from '@/utils/token.js'
@@ -47,8 +54,36 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/marketData',
+      component: marketData
+    },
+    {
+      path: '/share',
+      component: share
+    },
+    {
+      path: '/technic',
+      component: technic
+    },
+    {
+      path: '/shareList',
+      component: shareList
+    },
+    {
+      path: '/technicList',
+      component: technicList
+    },
+    {
+      path: '/marketDataList',
+      component: marketDataList
+    },
+    {
       path: '/login',
       component: login
+    },
+    {
+      path: '/search',
+      component: search
     },
     {
       path: '/profile',
@@ -69,8 +104,8 @@ const router = new VueRouter({
 // 导航守卫
 // 路由跳转之前do something
 router.beforeEach((to, from, next) => {
-  window.console.log('to', to)
-  window.console.log('from', from)
+  // window.console.log('to', to)
+  // window.console.log('from', from)
   // 判断去往的页面是否需要登录
   if (to.meta.needLogin) {
     // 首先判断路由元信息中的needLogin
@@ -85,7 +120,7 @@ router.beforeEach((to, from, next) => {
         // 有token 则可以通过token获取到信息
         getUserInfo()
           .then(res => {
-            window.console.log(res)
+            // window.console.log(res)
             res.data.avatar = process.env.VUE_APP_URL + res.data.avatar
             store.commit('SETUSERINFO', res.data)
             store.commit('SETLOGIN', true)

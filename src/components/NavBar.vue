@@ -4,12 +4,14 @@
     :title="title"
     :left-text="left_text"
     :right-text="right_text"
-    left-arrow
     @click-left="onClickLeft"
     @click-right="onClickRight"
   >
     <template #left>
-      <i class="iconfont iconbtn_nav_back"></i>
+      <i
+        class="iconfont"
+        :class="{ iconbtn_nav_back: !$route.meta.showTabbar }"
+      ></i>
     </template>
     <template #title>
       <slot name="title"></slot>
@@ -31,12 +33,12 @@ export default {
   methods: {
     onClickLeft () {
       this.$emit('onClickLeft')
-      // 返回逻辑
-      if (this.$route.query.redirect) {
-        this.$router.push('/find')
-      } else {
-        this.$router.go(-1)
-      }
+      // // 返回逻辑
+      // if (this.$route.query.redirect) {
+      //   this.$router.push('/find')
+      // } else {
+      //   this.$router.go(-1)
+      // }
     },
     onClickRight () {
       this.$emit('onClickRight')

@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <!-- 导航栏 -->
-    <NavBar class="navbar" title="我的资料"></NavBar>
+    <NavBar @onClickLeft="back" class="navbar" title="我的资料"></NavBar>
     <!-- 资料主体 -->
     <div class="main_box">
       <!-- 头像 -->
@@ -111,6 +111,9 @@ export default {
     onCancel () {
       this.$refs.picker.setColumnIndex(0, this.userInfo.gender)
       this.show1 = false
+    },
+    back () {
+      this.$router.go(-1)
     },
     // 编辑页面
     // 通过地址传入的prop来判断去往哪个页面

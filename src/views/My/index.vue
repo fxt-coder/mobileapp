@@ -43,7 +43,7 @@
     <div class="tag">
       <div class="data_box">
         <cell
-          @click="clickCell('position')"
+          @click="toEdit('position')"
           class="topcell"
           :value="userInfo.position"
           title="我的岗位"
@@ -137,7 +137,7 @@ export default {
     }
   },
   methods: {
-    clickCell (prop) {
+    toEdit (prop) {
       this.$router.push(`/editInfo?prop=${prop}`)
       // window.console.log('我是产品')
     },
