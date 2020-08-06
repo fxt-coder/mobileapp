@@ -25,4 +25,46 @@ function shareTopSearch () {
     url: '/articles/shareTopSearch'
   })
 }
-export { technicList, hotData, shareList, shareTopSearch }
+// 分享详情
+function shareInfo (id) {
+  return request({
+    url: `/articles/share/${id}`
+  })
+}
+// 评论详情
+function shareComments (params) {
+  const { id, limit, start } = params
+  return request({
+    url: `/articles/comments/${id}`,
+    params: {
+      limit,
+      start
+    }
+  })
+}
+function sendComment (data) {
+  return request({
+    url: '/articles/comments',
+    method: 'post',
+    needToken: true,
+    data
+  })
+}
+function starArticles (data) {
+  return request({
+    url: '/articles/star',
+    method: 'post',
+    needToken: true,
+    data
+  })
+}
+export {
+  starArticles,
+  sendComment,
+  shareComments,
+  shareInfo,
+  technicList,
+  hotData,
+  shareList,
+  shareTopSearch
+}

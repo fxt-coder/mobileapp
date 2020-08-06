@@ -24,7 +24,6 @@
 <script>
 export default {
   name: 'NavBar',
-  // props: ['title', 'left_text', 'right_text'],
   props: {
     title: String,
     left_text: String,
@@ -33,12 +32,6 @@ export default {
   methods: {
     onClickLeft () {
       this.$emit('onClickLeft')
-      // // 返回逻辑
-      // if (this.$route.query.redirect) {
-      //   this.$router.push('/find')
-      // } else {
-      //   this.$router.go(-1)
-      // }
     },
     onClickRight () {
       this.$emit('onClickRight')

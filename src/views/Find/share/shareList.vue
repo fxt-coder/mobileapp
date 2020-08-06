@@ -16,6 +16,7 @@
         @load="onload"
       >
         <ShareList
+          @click="toShareDetails(item)"
           :item="item"
           v-for="item in shareList"
           :key="item.id"
@@ -39,19 +40,6 @@ export default {
       limit: 5
     }
   },
-  // created () {
-  // shareList().then(res => {
-  //   window.console.log(res)
-  //   // 拼接基地址
-  //   res.data.list.forEach(v => {
-  //     if (v.author.avatar) {
-  //       v.author.avatar = process.env.VUE_APP_URL + v.author.avatar
-  //     }
-  //   })
-  //   this.shareList = res.data.list
-  // })
-  // },
-
   methods: {
     onload () {
       shareList({ start: this.start, limit: this.limit }).then(res => {
@@ -67,6 +55,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    toShareDetails (item) {
+      this.$router.push(`/share/${item.id}`)
     }
   }
 }

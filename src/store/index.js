@@ -3,16 +3,21 @@ import Vuex from 'vuex'
 import area from '@/utils/area.js'
 Vue.use(Vuex)
 export default new Vuex.Store({
+  // 开启严格模式
   strict: true,
   state: {
     // 判断用户登录
     isLogin: false, // 默认为false 当需要进行登录验证的时候利用Mutations中的方法来改变需要登录页面的isLogin
-    userInfo: ''
+    userInfo: '',
+    shareInfo: ''
   },
   mutations: {
     // 修改用户信息
     SETUSERINFO (state, newUserInfo) {
       state.userInfo = newUserInfo
+    },
+    SETSHAREINFO (state, newShareInfo) {
+      state.shareInfo = newShareInfo
     },
     SETLOGIN (state, newisLogin) {
       state.isLogin = newisLogin
@@ -22,6 +27,7 @@ export default new Vuex.Store({
       state.userInfo[propName] = propValue
     }
   },
+  // 作为store的计算属性 一般都有返回值供组件使用
   getters: {
     // 对用户的城市进行转换
     userArea (state) {

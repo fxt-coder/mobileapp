@@ -1,199 +1,351 @@
 <template>
   <div class="experience-detail-container">
     <!-- 导航栏 -->
-    <NavBar></NavBar>
+    <NavBar title="面经分享" @onClickLeft="$router.go(-1)"></NavBar>
+    <van-skeleton title avatar :row="20" v-if="shareInfo === ''" />
     <!-- 顶部 -->
-    <div class="top-box">
-      <div class="title">
-        拿到百度音乐的offer后，我总结了面试产品实习的几点经验
-      </div>
-      <div class="info-box">
-        <img src="../../../assets/157844.jpg" alt="" />
-        <div class="name-box">
-          <span class="name">浩子</span>
-          <span class="time">2020-8-1</span>
+    <template v-else>
+      <div class="top-box">
+        <div class="title">
+          {{ shareInfo.title }}
+        </div>
+        <div class="info-box">
+          <img :src="shareInfo.author.avatar" alt="" />
+          <div class="name-box">
+            <span class="name">{{ shareInfo.author.nickname }}</span>
+            <span class="time">{{ shareInfo.created_at | formateTime }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- 内容 -->
-    <div class="experience-content">
-      <img src="../../../assets/157844.jpg" alt="" />
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto enim id
-      deleniti, sint, repudiandae obcaecati voluptatibus pariatur exercitationem
-      odit est a illum et aperiam voluptas quo? Debitis quis ratione magni
-      consequatur eos sit rerum at, corrupti est ullam soluta ad eveniet
-      reiciendis. Dolores libero, suscipit id pariatur facilis omnis earum? Quo
-      enim reprehenderit mollitia dolor dicta placeat, asperiores hic
-      laboriosam. Beatae molestias officiis suscipit fugit in libero quae,
-      sapiente voluptatum vel voluptatem sint atque nisi ab, repellendus officia
-      temporibus commodi ipsam error rem tenetur magni sit cum blanditiis.
-      Beatae, ullam assumenda debitis sint minima quasi! Dignissimos sapiente ut
-      doloribus! Eveniet molestias itaque dolorem minima ratione maiores sint
-      nostrum quidem, cumque non magni, eius amet sunt obcaecati eaque ea
-      dolorum. Cumque vitae explicabo nemo omnis voluptas asperiores rem
-      molestiae assumenda architecto sapiente, rerum excepturi quia veritatis
-      tenetur magnam reiciendis deserunt natus ab modi? Illo molestiae sint iste
-      asperiores nemo recusandae, dolorem et ea saepe sit cum deleniti,
-      consectetur, iure nostrum quis sed rerum quos voluptates quibusdam!
-      Ducimus ab commodi dolorum esse nisi, dignissimos in consequatur sunt
-      tempore, eveniet ex facere quis placeat deleniti iure. Nostrum,
-      exercitationem sequi commodi qui, consequuntur nihil quo praesentium,
-      saepe omnis laboriosam ducimus molestiae aliquam voluptatem ut nulla
-      accusamus soluta porro! Deserunt sed porro optio explicabo impedit
-      exercitationem magnam iusto rerum inventore odio cumque praesentium quae
-      modi nihil ut deleniti, totam dolores fugit vitae sint obcaecati
-      asperiores officia quisquam. Quas, ipsa? Assumenda, hic. Est perspiciatis
-      blanditiis quaerat ut ea, eos quisquam error a autem omnis dolores fugit
-      hic! Amet impedit laborum voluptatum modi fuga labore repudiandae, at
-      dolorem laudantium placeat, optio expedita qui quaerat dolores ullam
-      debitis deserunt, consequatur nisi sunt necessitatibus rem maiores.
-      Quibusdam facilis dolores vel eum odit eaque quos quisquam ab autem error
-      blanditiis, voluptatum cumque vitae tempore quam ipsa reiciendis beatae
-      aspernatur esse sequi alias! Doloribus deserunt, reprehenderit consequatur
-      rem nostrum veritatis repellat recusandae aliquam asperiores dolorem
-      numquam ducimus reiciendis, dolor eligendi blanditiis magni voluptatum
-      inventore at, id quibusdam porro neque. Eum eos mollitia eligendi delectus
-      tenetur. Eveniet provident nisi quia voluptatibus soluta repellat,
-      distinctio labore, fugit minima voluptatum earum neque aspernatur dicta
-      molestiae odit aperiam! Eaque harum accusamus, perspiciatis voluptatem
-      quas iusto ipsum! Laboriosam quas aperiam ipsum, at rem aliquam vel optio
-      aut odio pariatur sit voluptatibus recusandae praesentium neque
-    </div>
+      <!-- 内容 -->
+      <div class="experience-content" v-html="shareInfo.content"></div>
+    </template>
     <!-- 评论 -->
     <div class="comment-box">
       <!-- 顶部评论 -->
       <div class="title">评论 <span class="num">68</span></div>
       <!-- 每一项 -->
-      <div class="comment">
-        <!-- 姓名 点赞区域 -->
-        <div class="info-box">
-          <img src="../../../assets/157844.jpg" alt="" />
-          <div class="name-box">
-            <span class="name">浩子</span>
-            <span class="time">3小时前</span>
-          </div>
-          <div class="zan-box">
-            <span>68</span>
-            <i class="iconfont iconbtn_dianzan_small_nor"></i>
-          </div>
-        </div>
-        <!-- 评论内容 -->
-        <div class="content-box">
-          <div class="content">点赞，很有收获呢</div>
-          <div class="reply-box">
-            <div class="reply">
-              <span class="name">小李:</span>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta
-              velit ex accusantium enim cupiditate nostrum quibusdam nemo, iure
-              modi quod fugit quasi rerum inventore eaque hic minima sunt
-              voluptatibus mollitia!
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <div v-for="item in commentList" :key="item.id" class="comment">
+          <!-- 姓名 点赞区域 -->
+          <div class="info-box">
+            <img :src="item.author.avatar" alt="" />
+            <div class="name-box">
+              <span class="name">{{ item.author.nickname }}</span>
+              <span class="time">{{ item.created_at | formateTime }}</span>
             </div>
-            <div class="reply">
-              <span class="name">小黑:</span>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta
+            <div class="zan-box">
+              <span>{{ item.star }}</span>
+              <i class="iconfont iconbtn_dianzan_small_nor"></i>
             </div>
           </div>
+          <!-- 评论内容 -->
+          <div class="content-box">
+            <div class="content" @click="popUp(item)">
+              {{ item.content }}
+            </div>
+            <div class="reply-box" v-if="item.children_comments.length > 0">
+              <div
+                class="reply"
+                v-for="item1 in item.children_comments"
+                :key="item1.id"
+                @click="popUp(item1)"
+              >
+                <span class="name">{{ item1.author }}:</span>
+                {{ item1.content }}
+              </div>
+            </div>
+          </div>
+          <!-- 回复评论 -->
         </div>
-        <!-- 回复评论 -->
+      </van-list>
+
+      <!-- 底部盒子 -->
+      <div class="bottom-box">
+        <div class="input" @click="show = true">我来补充两句</div>
+        <div class="shoucang">
+          <i class="iconfont iconbtn_shoucang_nor"></i>
+          {{ shareInfo.collect }}
+        </div>
+        <div class="star" @click="clickStarArticles">
+          <i
+            class="iconfont iconbtn_dianzan_small_nor"
+            :class="{ actived: isStar }"
+          ></i>
+          {{ shareInfo.star }}
+        </div>
+        <div class="share" @click="clickShare">
+          <i class="iconfont iconbtn_share"></i>
+          {{ shareInfo.share }}
+        </div>
       </div>
-      <div class="comment">
-        <!-- 姓名 点赞区域 -->
-        <div class="info-box">
-          <img src="../../../assets/157844.jpg" alt="" />
-          <div class="name-box">
-            <span class="name">浩子</span>
-            <span class="time">3小时前</span>
+      <!-- 底部回复弹出层 -->
+      <van-popup
+        class="input-pop"
+        v-model="show"
+        position="bottom"
+        :style="{ height: '24%' }"
+      >
+        <van-field
+          autosize
+          type="textarea"
+          autofocus
+          v-model="value"
+          :placeholder="placeholder"
+          rows="4"
+        />
+        <span @click="subComment">发送</span>
+      </van-popup>
+      <!-- 分享弹出层 -->
+      <van-popup v-model="showShare">
+        <div v-if="!imgUrl" class="share-box" ref="shareBox">
+          <div class="text">
+            长按图片下载并分享
           </div>
-          <div class="zan-box">
-            <span>68</span>
-            <i class="iconfont iconbtn_dianzan_small_nor"></i>
+          <div class="share-content-box">
+            <div class="title">
+              {{ shareInfo.title }}
+            </div>
+            <div class="user-box">
+              <img :src="shareInfo && shareInfo.author.avatar" alt="" />
+              <span>{{ shareInfo && shareInfo.author.nickname }}</span>
+            </div>
+            <div class="content" v-html="shareInfo.content"></div>
+            <img class="logo" src="@/assets/img_share_logo@2x.png" alt="" />
+            <img class="code" :src="codeUrl" alt="" />
+            <div class="direction">长按识别二维码查看原文</div>
           </div>
         </div>
-        <!-- 评论内容 -->
-        <div class="content-box">
-          <div class="content">点赞，很有收获呢</div>
-          <div class="reply-box">
-            <div class="reply">
-              <span class="name">小李:</span>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta
-              velit ex accusantium enim cupiditate nostrum quibusdam nemo, iure
-              modi quod fugit quasi rerum inventore eaque hic minima sunt
-              voluptatibus mollitia!
-            </div>
-            <div class="reply">
-              <span class="name">小黑:</span>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            </div>
-          </div>
-        </div>
-        <!-- 底部盒子 -->
-        <div class="bottom-box">
-          <div class="input" @click="show = true">我来补充两句</div>
-          <div class="shoucang">
-            <i class="iconfont iconbtn_shoucang_nor"></i>
-            234
-          </div>
-          <div class="star">
-            <i class="iconfont iconbtn_dianzan_small_nor"></i>
-            125
-          </div>
-          <div class="share" @click="showShare = true">
-            <i class="iconfont iconbtn_share"></i>
-            998
-          </div>
-        </div>
-        <!-- 底部回复弹出层 -->
-        <van-popup
-          class="input-pop"
-          v-model="show"
-          position="bottom"
-          :style="{ height: '24%' }"
-        >
-          <van-field
-            autosize
-            type="textarea"
-            autofocus
-            v-model="value"
-            placeholder="请输入用户名"
-            rows="4"
-          />
-          <span>发送</span>
-        </van-popup>
-        <!-- 分享弹出层 -->
-        <van-popup v-model="showShare">
-          <div class="share-box">
-            <div class="text">
-              长按图片下载并分享
-            </div>
-            <div class="share-content-box">
-              <div class="title">
-                拿到百度音乐的offer后，我总结了面试产品实习的几点经验
-              </div>
-              <div class="user-box">
-                <img src="../../../assets/157844.jpg" alt="" />
-                <span>热爱生活</span>
-              </div>
-              <div class="content">
-                先说一下我的基本情况，本人是北京大学前沿交叉学院数据科学专业研一学生，本科在兰州大学信息安全专业。之所以选择走产品而不是技术，代码能力马马虎虎，而且对编程不感兴趣，最关键的是我性格比较外向，比起每天闷头敲代码，更喜欢和人打交道。于是乎，我开始从各种渠道了解产品经理的前世今生，从《人人都是产品经理》这本书和人人都是产品经理社区，再到知乎，了解到了很多笼统的概念，但是感觉如果没有亲身经历，理论和框架就显得很空洞，而且产品不像技术，门槛相对略低，所以更需要实习的经历，再加上本科的时候从未有过实习经历，所以我很迫切的想找一份产品实习。在面试了滴滴出行、回家吃饭和百度音乐之后，拿到了后面两家的Offer，最终选择了百度音乐。
-              </div>
-              <img class="logo" src="../../../assets/157844.jpg" alt="" />
-              <img class="code" src="../../../assets/157844.jpg" alt="" />
-              <div class="direction">长按识别二维码查看原文</div>
-            </div>
-          </div>
-        </van-popup>
-      </div>
+        <img v-else :src="imgUrl" alt="" class="shareImg" />
+      </van-popup>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  shareInfo,
+  shareComments,
+  sendComment,
+  starArticles
+} from '@/api/find.js'
+import { mapMutations, mapState } from 'vuex'
+import { getToken } from '@/utils/token.js'
+import QRCode from 'qrcode'
+import html2canvas from 'html2canvas'
 export default {
   data () {
     return {
       show: false,
       showShare: false,
-      value: ''
+      value: '',
+      shareInfo: '',
+      limit: 4,
+      start: 0,
+      finished: false,
+      loading: false,
+      commentList: [],
+      placeholder: '请输入评论',
+      // 回复评论数据对象   此处利用对象来动态添加对象属性进行axios接口数据交互
+      parentComment: '',
+      codeUrl: '',
+      imgUrl: ''
+    }
+  },
+  created () {
+    window.console.log(this.$route.params.id)
+    if (getToken()) {
+      this.$checkLogin()
+    }
+    shareInfo(this.$route.params.id).then(res => {
+      window.console.log('详情', res)
+      if (res.data.author.avatar) {
+        res.data.author.avatar =
+          process.env.VUE_APP_URL + res.data.author.avatar
+      }
+      this.shareInfo = res.data
+    })
+  },
+  computed: {
+    // 合并用户信息
+    ...mapState(['userInfo']),
+    isStar () {
+      // 通过用户信息来判断是否登录了
+      if (this.userInfo) {
+        const id = +this.$route.params.id // 字符串变数字类型
+        const isStar = this.userInfo.starArticles.includes(id)
+        window.console.log(isStar)
+        return isStar
+      } else {
+        return false
+      }
+    }
+  },
+  // DOM树渲染完成后
+  mounted () {
+    QRCode.toDataURL(window.location.href)
+      .then(url => {
+        console.log('url', url)
+        this.codeUrl = url
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  },
+  methods: {
+    ...mapMutations(['SETPROPVALUE']),
+    clickStarArticles () {
+      // window.console.log('谢谢点赞')
+      this.$toast.loading({ duration: 0 })
+      this.$checkLogin()
+        .then(() => {
+          starArticles({ article: this.$route.params.id }).then(res => {
+            window.console.log(res)
+            this.SETPROPVALUE({
+              propName: 'starArticles',
+              propValue: res.data.list
+            })
+            this.shareInfo.star = res.data.num
+            window.console.log(res.data.num)
+            this.$toast.clear()
+          })
+        })
+        .catch(err => {
+          window.console.log(err)
+        })
+    },
+    // 评论发送
+    subComment () {
+      // 校验登录
+      this.$checkLogin()
+        .then(res => {
+          // console.log('登陆啦')
+
+          // 判断是发给谁的评论
+          const data = {
+            content: this.value
+          }
+          // 根据是否有parentComment 动态生成数据对象 根据控制点击部分来确定post的数据携带的id
+          if (this.parentComment) {
+            // 回复评论
+            data.parent = this.parentComment.id
+          } else {
+            // 发表评论 给文章
+            data.article = this.$route.params.id
+          }
+          // 发表评论
+          sendComment(data).then(res => {
+            console.log(res)
+            if (res.data.parent) {
+              // 回复评论
+              // 添加到父评论中
+              this.parentComment.children_comments.push(res.data)
+              // 清空父评论
+              this.parentComment = ''
+            } else {
+              // 文章评论
+              if (res.data.author.avatar) {
+                res.data.author.avatar =
+                  process.env.VUE_APP_URL + res.data.author.avatar
+              }
+              // 追加到数组的顶端
+              this.commentList.unshift(res.data)
+            }
+
+            // if (res.data.author.avatar) {
+            //   res.data.author.avatar =
+            //     process.env.VUE_APP_URL + res.data.author.avatar
+            // }
+            // // 追加到数组的顶端
+            // this.commentList.unshift(res.data)
+            // 提示用户成功
+            this.$toast.success('发表成功')
+            // 关闭框框
+            this.show = false
+            // 清空输入框
+            this.value = ''
+          })
+        })
+        .catch(err => {
+          console.log(err)
+          console.log('没有登陆')
+        })
+    },
+    // 文章评论弹窗
+    popUp (item) {
+      window.console.log(item)
+      this.parentComment = item
+      if (item.author.nickname) {
+        this.placeholder = `回复：@${item.author.nickname}`
+      } else if (item.author) {
+        this.placeholder = `回复：@${item.author}`
+      } else {
+        this.placeholder = '说点什么吧！'
+      }
+      this.show = true
+    },
+    // 点击分享
+    clickShare () {
+      // await this.$checkLogin()
+      // this.showShare = true
+      // window.scrollTo(0, 0)
+      // this.$nextTick(async () => {
+      //   const canvas = await html2canvas(this.$refs.shareBox, {
+      //     allowTaint: true,
+      //     useCORS: true
+      //   })
+      //   const imgUrl = canvas.toDataURL()
+      //   this.imgUrl = imgUrl
+      // })
+      this.$checkLogin()
+      this.showShare = true
+      window.scrollTo(0, 0)
+      this.$nextTick(() => {
+        html2canvas(this.$refs.shareBox, {
+          allowTaint: true,
+          useCORS: true
+        }).then(canvas => {
+          window.console.log('canvas', canvas)
+          // 尝试转换为 URL地址
+          const imgUrl = canvas.toDataURL()
+          // 设置src地址
+          this.imgUrl = imgUrl
+        })
+      })
+    },
+    // 评论回复弹窗
+    // replyPopUp (item1) {
+    //   if (item1) {
+    //     this.placeholder = `回复：@${item1.author}`
+    //   } else {
+    //     this.placeholder = '说点什么吧！'
+    //   }
+    //   this.show = true
+    // },
+    onLoad () {
+      shareComments({
+        id: this.$route.params.id,
+        limit: this.limit,
+        start: this.start
+      }).then(res => {
+        window.console.log('评论', res)
+        res.data.list.forEach(v => {
+          if (v.author.avatar) {
+            v.author.avatar = process.env.VUE_APP_URL + v.author.avatar
+          }
+        })
+        this.commentList.push(...res.data.list)
+        this.loading = false
+        this.start += this.limit
+        if (this.commentList.length >= res.data.total) {
+          this.finished = true
+        }
+      })
     }
   }
 }
@@ -266,6 +418,7 @@ export default {
     margin-top: 10px;
     background-color: @white-color;
     padding: 26px 15px;
+    overflow: hidden;
     .title {
       font-size: 18px;
       font-weight: 500;
@@ -314,6 +467,7 @@ export default {
     height: 85px;
     display: flex;
     box-sizing: border-box;
+    text-align: center;
     padding: 10px 15px 0;
     background-color: @white-color;
     width: 100%;
@@ -343,11 +497,15 @@ export default {
     }
     .star {
       margin-right: 24px;
+      .actived {
+        color: @main-color;
+      }
     }
   }
   .input-pop {
     padding: 25px 15px 0;
     overflow: hidden;
+    box-sizing: border-box;
     // 弹出层
     .van-cell::after {
       border-bottom: none;
@@ -365,6 +523,11 @@ export default {
       margin-top: 11px;
     }
   }
+  .shareImg {
+    width: 326px;
+    height: 569px;
+    display: block;
+  }
   // 底部弹出层
   .share-box {
     width: 311px;
@@ -376,6 +539,7 @@ export default {
     background-image: url('../../../assets/157844.jpg');
     display: flex;
     flex-direction: column;
+
     .text {
       text-align: center;
       font-size: 12px;

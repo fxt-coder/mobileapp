@@ -18,7 +18,12 @@ import '@/styles/base.less'
 // import NavBar from '@/components/NavBar.vue'
 // import cell from '@/components/cell.vue'
 // 导入组件库components
+import plugin from '@/plugin/index.js'
 import Components from '@/components/index.js'
+// import * from components from '@/components/index.js'
+// Object.keys(components).forEach(key => {
+//   Vue.filter(key, components[key])
+// })
 // eslint-disable-next-line import/no-duplicates
 import { Toast } from 'vant'
 // 导入全局过滤器
@@ -28,6 +33,8 @@ Toast.setDefaultOptions({ duration: 1000 })
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+// 注册
+Vue.use(plugin)
 // 注册vant
 Vue.use(Vant)
 // 注册Components组件库

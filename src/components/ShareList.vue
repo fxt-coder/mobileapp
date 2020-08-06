@@ -1,5 +1,5 @@
 <template>
-  <div class="item van-hairline--bottom">
+  <div class="item van-hairline--bottom" @click="toShareInfo">
     <h3 v-html="item.title"></h3>
     <div class="desc">
       {{ item.content }}
@@ -29,6 +29,11 @@ export default {
   props: {
     item: {
       type: Object
+    }
+  },
+  methods: {
+    toShareInfo () {
+      this.$emit('click')
     }
   }
 }

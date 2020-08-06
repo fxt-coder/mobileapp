@@ -4,7 +4,7 @@
     <div class="top-box">
       <NavBar title="面经分享搜索" @onClickLeft="$router.go(-1)"></NavBar>
       <van-search
-        @keydown.enter="onSearch"
+        @search="onSearch"
         shape="round"
         v-model="value"
         placeholder="请输入搜索关键词"

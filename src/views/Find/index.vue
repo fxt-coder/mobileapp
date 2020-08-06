@@ -16,7 +16,7 @@
                 {{ item.title }}
               </h3>
               <div class="detail-box">
-                <div class="time">{{ item.created_at | formatTime }}</div>
+                <div class="time">{{ item.created_at | formateYear }}</div>
                 <div class="read">
                   <i class="iconfont iconicon_liulanliang"></i>
                   {{ item.read }}
@@ -89,8 +89,9 @@
       <div class="share-container">
         <cell title="面经分享" value="查看更多" @click="toShareList"> </cell>
         <div class="share-content">
-          <div class="list" @click="toShareDetails">
+          <div class="list">
             <ShareList
+              @click="toShareDetails(item.id)"
               v-for="item in shareList"
               :key="item.id"
               :item="item"
@@ -105,8 +106,8 @@
 <script>
 // 导入api
 import { technicList, hotData, shareList } from '@/api/find.js'
-// 导入moment
-import moment from 'moment'
+import { mapState } from 'vuex'
+
 export default {
   name: 'find',
   data () {
@@ -122,18 +123,15 @@ export default {
       // dataList: {}
     }
   },
-  // 过滤器
-  filters: {
-    // 格式化日期
-    formatTime (value) {
-      // 处理数据 并返回
-      // return moment(value).format('YYYY年MM月DD日')
-      moment.locale('zh-cn')
-      return moment(value).fromNow()
-    }
-  },
   created () {
     this.getData()
+  },
+  activated () {
+    this.$checkLogin()
+    this.getData()
+  },
+  computed: {
+    ...mapState(['userInfo', 'shareInfo'])
   },
   methods: {
     // 跳转详情页面
@@ -143,8 +141,8 @@ export default {
     toTechnicDetails () {
       this.$router.push('/technic')
     },
-    toShareDetails () {
-      this.$router.push('/share')
+    toShareDetails (id) {
+      this.$router.push(`/share/${id}`)
     },
     // 跳转到列表页面
     toDataList () {
@@ -153,7 +151,7 @@ export default {
     toTechnicList () {
       this.$router.push('/technicList')
     },
-    toShareList () {
+    toShareList (id) {
       this.$router.push('/shareList')
     },
     // 下拉刷新
@@ -189,7 +187,7 @@ export default {
       })
       // 获取面经分享
       shareList().then(res => {
-        window.console.log(res)
+        window.console.log('面经分享', res)
         res.data.list.forEach(v => {
           if (v.author.avatar) {
             v.author.avatar = process.env.VUE_APP_URL + v.cover

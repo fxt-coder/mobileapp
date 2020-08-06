@@ -58,7 +58,8 @@ const router = new VueRouter({
       component: marketData
     },
     {
-      path: '/share',
+      // 动态路由匹配
+      path: '/share/:id',
       component: share
     },
     {
@@ -144,5 +145,9 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
+})
+
+router.afterEach((to, from) => {
+  window.scrollTo(0, 0)
 })
 export default router
